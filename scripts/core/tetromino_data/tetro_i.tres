@@ -1,0 +1,24 @@
+## tetro_i.tres
+## The Straight Piece. 4 blocks in a line.
+## Color: Cyan.
+
+[gd_resource type="Resource" format=3]
+
+[ext_resource 1="res://scripts/core/tetromino.gd" type="Script" path="res://scripts/core/tetromino.gd" id="1"]
+
+[resource]
+uid="uid://cy4s9x8y2u8h6k3z7w9m1n5p4q0r4b0a"
+script_ext_resource=1
+piece_type="I"
+display_name="The Straight"
+description="A classic 4-block line."
+color=Color(0, 1, 1, 1)
+material_index=1
+pivot_offset=Vector2i(1, 1)
+shapes_0=PackedVector2iArray(-1, 0, 0, 0, 1, 0, 2, 0)
+shapes_1=PackedVector2iArray(0, -1, 0, 0, 0, 1, 0, 2)
+default_rotation=0
+gravity_multiplier=1.0
+is_ghost_piece=false
+is_sticky_piece=false
+id="PieceI"

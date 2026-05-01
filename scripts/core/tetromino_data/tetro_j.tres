@@ -1,0 +1,26 @@
+## tetro_j.tres
+## The J Piece. The left-facing hook.
+## Color: Blue.
+
+[gd_resource type="Resource" format=3]
+
+[ext_resource 1="res://scripts/core/tetromino.gd" type="Script" path="res://scripts/core/tetromino.gd" id="1"]
+
+[resource]
+uid="uid://f7v2a3c1b5x1n6c0z2q4s7t3r7e5d3b"
+script_ext_resource=1
+piece_type="J"
+display_name="The J-Piece"
+description="A hook shaped like a boat anchor."
+color=Color(0.2, 0.2, 1, 1)
+material_index=4
+pivot_offset=Vector2i(1, 1)
+shapes_0=PackedVector2iArray(-1, 1, -1, 0, 0, 0, 1, 0)
+shapes_1=PackedVector2iArray(0, -1, 0, 0, 1, 0, 2, 0)
+shapes_2=PackedVector2iArray(-1, 0, 0, 0, 0, -1, 0, -2)
+shapes_3=PackedVector2iArray(0, 0, 1, 0, 1, 1, 1, 2)
+default_rotation=0
+gravity_multiplier=1.0
+is_ghost_piece=false
+is_sticky_piece=false
+id="PieceJ"

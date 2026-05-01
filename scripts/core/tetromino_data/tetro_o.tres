@@ -1,0 +1,23 @@
+## tetro_o.tres
+## The O Piece. The 2x2 square. Doesn't rotate internally.
+## Color: Yellow.
+
+[gd_resource type="Resource" format=3]
+
+[ext_resource 1="res://scripts/core/tetromino.gd" type="Script" path="res://scripts/core/tetromino.gd" id="1"]
+
+[resource]
+uid="uid://h9x4c5e3d7z3p8e2b4s6u9v5t9g7f5d"
+script_ext_resource=1
+piece_type="O"
+display_name="The O-Piece"
+description="A sturdy 2x2 box that never deforms."
+color=Color(1, 1, 0, 1)
+material_index=6
+pivot_offset=Vector2i(0, 0)
+shapes_0=PackedVector2iArray(0, 0, 1, 0, 0, 1, 1, 1)
+default_rotation=0
+gravity_multiplier=1.0
+is_ghost_piece=false
+is_sticky_piece=false
+id="PieceO"

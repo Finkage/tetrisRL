@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dbefhbrcujp6n"]
+
+[ext_resource type="Script" uid="uid://cwpuh24enrlim" path="res://scripts/rendering/grid_renderer.gd" id="1_st75o"]
+
+[node name="GridRenderer" type="Node2D" unique_id=1794982742]
+script = ExtResource("1_st75o")

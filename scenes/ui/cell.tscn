@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b0l3qg8ww15nu"]
+
+[ext_resource type="Script" uid="uid://dw12uutl8t4m0" path="res://scripts/rendering/cell.gd" id="1_3ck7d"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ljd7m"]
+load_path = "res://.godot/imported/NES - Tetris - Miscellaneous - Block Tiles.png-5e7f240fc894a14e506eed4c98e35e2f.ctex"
+
+[node name="Cell" type="Sprite2D" unique_id=369309737]
+scale = Vector2(5, 5)
+texture = SubResource("CompressedTexture2D_ljd7m")
+centered = false
+region_enabled = true
+script = ExtResource("1_3ck7d")
