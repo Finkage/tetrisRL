@@ -3,7 +3,7 @@ extends Node2D
  
 const CELL_SIZE = 40  # 8px tile * 6 scale
 const CellScene = preload("res://scenes/ui/cell.tscn")
-const MAX_LEVEL_TINT: float = 20.0 # level 20+ = full tint
+const MAX_LEVEL_TINT: float = 10.0 # level 10+ = full tint
 
 var engine: TetrisEngine
 var level: int = 1
