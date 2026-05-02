@@ -11,6 +11,7 @@ signal lines_cleared(line_indices: Array[int])
 signal game_over
 signal score_changed(new_score: int)
 signal level_changed(new_level: int)
+signal gravity_changed(new_interval: float)
 
 # ── State ────────────────────────────────────────────────────
 var grid: TetrisGrid
@@ -31,10 +32,12 @@ var soft_drop_speed: float = 0.05
 var _drop_timer: float = 0.0
 var _lock_timer: float = 0.0
 var _is_on_ground: bool = false
+var gravity_multiplier: float = 1
 
 # ── Initialization ───────────────────────────────────────────
 func _init(grid_width: int = 10, grid_height: int = 20) -> void:
 	grid = TetrisGrid.new(grid_width, grid_height)
+	
 
 # ── Core Loop ────────────────────────────────────────────────
 func tick(delta: float) -> void:
@@ -56,7 +59,6 @@ func tick(delta: float) -> void:
 			_lock_timer += delta
 			if _lock_timer >= lock_delay:
 				_lock_piece()
-				_lock_timer = 0.0
 			return
 	
 	# 4: tick gravity and try to move piece down
@@ -307,6 +309,7 @@ func _check_lines() -> void:
 
 	if did_level_up:
 		emit_signal("level_changed", level)
+		gravity_changed.emit(_get_drop_interval())
 
 func _update_ghost() -> void:
 	# If there is no active piece, there is no ghost to update
@@ -412,7 +415,7 @@ func _get_drop_interval() -> float:
 
 	var interval: float = pow(base, exponent)
 
-	return interval
+	return interval * gravity_multiplier
 
 func _update_ground_state() -> void:
 	# ground checker. creates a false tetromino instance one tick ahead 
@@ -443,10 +446,14 @@ func _try_move_down() -> bool:
 	if _is_valid_position(test):
 		active_piece.row = new_row
 		_is_on_ground = false
-		_update_ghost()
 		_lock_timer = 0.0 # any downward movement cancels lock delay
+		_update_ghost()
 		emit_signal("piece_moved", active_piece)
 		return true
 	
 	# 3: return false if not
 	return false
+
+func set_gravity(gravity: float) -> void:
+	gravity_multiplier = gravity
+	gravity_changed.emit(_get_drop_interval())

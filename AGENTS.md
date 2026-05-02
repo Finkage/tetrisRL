@@ -194,10 +194,18 @@ lines_cleared_total: int
 game_over_state: bool
 is_paused: bool
 
+# Gravity (configurable for buffs)
+var gravity_multiplier: float  # set property, emits gravity_changed on change
+var base_gravity_multiplier: float # starting value, default 1.0
+
 # Signals emitted (in order on piece lock):
 # piece_locked → lines_cleared → piece_spawned
 # Other signals: piece_moved, piece_rotated, piece_held,
-#                score_changed, level_changed, game_over
+#                score_changed, level_changed, gravity_changed, game_over
+
+# Tick phases (call order in tick()):
+# 1. _update_ground_state() — check if piece can fall further
+# 2. Lock delay if on ground — _lock_timer accumulates
 ```
 
 ---

@@ -151,7 +151,7 @@ signal score_changed(new_score: int)
 signal level_changed(new_level: int)  # NOTE: do not shadow with local var named level_changed
 ```
 
-**Gravity formula:** `interval = (0.8 - (level-1) * 0.007) ^ (level-1)`, clamped to base >= 0.01.
+**Gravity formula:** `interval = (0.8 - (level-1) * 0.007) ^ (level-1)` (Nintendo Standard), multiplied by `gravity_multiplier`. Base clamped to >= 0.01.
 
 **Scoring:** `[0, 100, 300, 500, 800][line_count] * level`. Hard drop: 2pts/row. Soft drop: 1pt/row.
 
@@ -162,6 +162,8 @@ signal level_changed(new_level: int)  # NOTE: do not shadow with local var named
 **7-bag:** Refill when queue < 7 pieces. `get_all()` → shuffle → append.
 
 **Signal order on lock:** `piece_locked` → `lines_cleared` → `piece_spawned`. Never reorder — renderer depends on this sequence.
+
+**Gravity system:** `gravity_multiplier` is a set property with `clampf(0.01, 10.0)`. Setting it emits `gravity_changed(new_interval)`. Buffs/event systems can modify it to slow/speed up gameplay without engine changes. Level changes also emit this signal automatically.
 
 ### 2.5 Key Abstraction Points
 
@@ -288,7 +290,9 @@ TetrisEngine.signals
 	├── piece_locked   → hide piece cells, refresh grid
 	├── lines_cleared  → refresh grid (data already updated)
 	├── game_over      → trigger end screen
-	└── score_changed  → update HUD
+	├── score_changed  → update HUD
+	├── level_changed  → update HUD, recompute background tint
+	└── gravity_changed → trigger speed indicator flash or meter update
 ```
 
 ### 5.2 Cell Rendering
@@ -304,6 +308,7 @@ TetrisEngine.signals
 
 - Extends `Node2D`, positioned at `Vector2(40, 44)` in game scene
 - Background drawn via `_draw()` override using `draw_rect()`
+- **Background tint:** `Color(0.1, 0.1, 0.18)` lerp toward `Color(level*0.015, 0.1, 0.18)` each frame — adds red intensity as level increases
 - Three cell layers (build order = render order, last = front):
   1. Grid cells (200 nodes, always exist, updated on lock/clear)
   2. Ghost cells (4 nodes, `modulate.a = 0.35`)
@@ -384,16 +389,21 @@ tetrisRL/
 
 ### Phase 1: Tetris Core ✅ COMPLETE
 
-- [x] Project setup, folder structure, autoloads
-- [x] `TetrisGrid` with resize support and cell state constants
-- [x] `Tetromino` resource class (String id, no enum, grid_size)
-- [x] `TetrominoInstance` with `get_cells()`
-- [x] `PieceLibrary` autoload with all 7 default pieces
-- [x] `TetrisEngine` — full game loop, all mechanics
-- [x] `GridRenderer` — cell nodes, ghost, background
-- [x] `Cell` scene — Sprite2D, spritesheet region
-- [x] Keyboard input (Input Map actions)
-- [x] Project settings (viewport, pixel art filter)
+|- [x] Project setup, folder structure, autoloads
+|- [x] `TetrisGrid` with resize support and cell state constants
+|- [x] `Tetromino` resource class (String id, no enum, grid_size)
+|- [x] `TetrominoInstance` with `get_cells()`
+|- [x] `PieceLibrary` autoload with all 7 default pieces
+|- [x] `TetrisEngine` — full game loop, all mechanics
+|- [x] `GridRenderer` — cell nodes, ghost, background
+|- [x] `Cell` scene — Sprite2D, spritesheet region
+|- [x] Keyboard input (Input Map actions)
+|- [x] Project settings (viewport, pixel art filter)
+|- [x] **Dynamic gravity** — classic Tetris formula `interval = (0.8 - (level-1) * 0.007) ^ (level-1)`
+|- [x] **Clean tick system** — phased: ground check → lock delay → gravity (no duplicated logic)
+|- [x] **`gravity_multiplier`** property with set/emit pattern — ready for future buff/event modifiers
+|- [x] **`gravity_changed` signal** — fires whenever speed changes (level up, buffs, etc.)
+|- [x] **Background tint shift** — `GridRenderer._draw()` lerps red channel based on level (0.05→0.20 red)
 
 **Milestone: Full vanilla Tetris is playable ★**
 

@@ -3,8 +3,10 @@ extends Node2D
  
 const CELL_SIZE = 40  # 8px tile * 6 scale
 const CellScene = preload("res://scenes/ui/cell.tscn")
+const MAX_LEVEL_TINT: float = 20.0 # level 20+ = full tint
 
 var engine: TetrisEngine
+var level: int = 1
 
 # 2D array [row][col] of Cell nodes representing the static grid
 var _grid_cells: Array = []       
@@ -51,9 +53,13 @@ func _build_grid() -> void:
 
 
 func _draw() -> void:
+	var tint_ratio: float = clampf(level / MAX_LEVEL_TINT, 0.0, 1.0)
+	var background_red: float = 0.05 + (tint_ratio * 0.15) 
+	
+	var background_color: Color = Color(background_red, 0.1, 0.18)
 	draw_rect(
 		Rect2(0, 0, engine.grid.width * CELL_SIZE, engine.grid.height * CELL_SIZE),
-		Color(0.1, 0.1, 0.18)
+		background_color
 	)
 
 
@@ -86,6 +92,7 @@ func _connect_signals() -> void:
 	engine.piece_locked.connect(_on_piece_locked)
 	engine.lines_cleared.connect(_on_lines_cleared)
 	engine.game_over.connect(_on_game_over)
+	engine.level_changed.connect(_on_level_changed)
 
 ## Handles piece updates (move/rotate).
 ## Updates position and color for active piece cells.
@@ -173,7 +180,11 @@ func _refresh_grid() -> void:
 func _on_lines_cleared(lines: Array[int]) -> void:
 	_refresh_grid()
 	
-	
+
+func _on_level_changed(new_level: int) -> void:
+	level = new_level
+	queue_redraw()
+
 
 ## Handles game over.
 func _on_game_over() -> void:
