@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bwf60ruvcy423"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1401810516]
+
+[node name="UI" type="VBoxContainer" parent="." unique_id=884450290]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=409479458]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Score: 0"
+
+[node name="LevelLabel" type="Label" parent="UI" unique_id=842285486]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Level: 1"
+
+[node name="LinesLabel" type="Label" parent="UI" unique_id=888649631]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Lines: 0"

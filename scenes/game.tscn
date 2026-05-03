@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://b61jp70x0k3l1" path="res://scripts/game.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://dbefhbrcujp6n" path="res://scenes/rendering/grid_renderer.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://bwf60ruvcy423" path="res://scenes/ui/hud.tscn" id="3_lnu2h"]
 
 [node name="game" type="Node" unique_id=1012380551]
 script = ExtResource("1_uwrxv")
 
 [node name="GridRenderer" parent="." unique_id=1794982742 instance=ExtResource("2_yqjtg")]
+
+[node name="HUD" parent="." unique_id=1401810516 instance=ExtResource("3_lnu2h")]

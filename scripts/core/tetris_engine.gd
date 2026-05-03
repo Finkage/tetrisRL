@@ -56,10 +56,10 @@ func tick(delta: float) -> void:
 
 	# 3: start lock tick if on ground
 	if _is_on_ground:
-			_lock_timer += delta
-			if _lock_timer >= lock_delay:
-				_lock_piece()
-			return
+		_lock_timer += delta
+		if _lock_timer >= lock_delay:
+			_lock_piece()
+		return
 	
 	# 4: tick gravity and try to move piece down
 	_drop_timer += delta
