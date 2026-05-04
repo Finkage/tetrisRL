@@ -3,7 +3,8 @@ extends Node2D
  
 const CELL_SIZE = 40  # 8px tile * 6 scale
 const CellScene = preload("res://scenes/ui/cell.tscn")
-const MAX_LEVEL_TINT: float = 10.0 # level 10+ = full tint
+const MAX_LEVEL_TINT_RED: float = 10.0 # level 10+ = full tint
+const MAX_LEVEL_TINT_BLUE: float = 10.0 # level 10+ = min tint
 
 var engine: TetrisEngine
 var level: int = 1
@@ -53,10 +54,12 @@ func _build_grid() -> void:
 
 
 func _draw() -> void:
-	var tint_ratio: float = clampf(level / MAX_LEVEL_TINT, 0.0, 1.0)
-	var background_red: float = 0.05 + (tint_ratio * 0.15) 
+	var tint_ratio_red: float = clampf(level / MAX_LEVEL_TINT_RED , 0.0, 1.0)
+	var tint_ratio_blue: float = clampf(level / MAX_LEVEL_TINT_BLUE, 0.0, 1.0)
+	var background_red: float = 0.05 + (tint_ratio_red * 0.55)
+	var background_blue: float = 0.18 - (tint_ratio_blue * 0.18)
 	
-	var background_color: Color = Color(background_red, 0.1, 0.18)
+	var background_color: Color = Color(background_red, 0.1, background_blue)
 	draw_rect(
 		Rect2(0, 0, engine.grid.width * CELL_SIZE, engine.grid.height * CELL_SIZE),
 		background_color
